@@ -33,10 +33,4 @@
 
 🔗 兼容性規格表"[立即查看(繁體中文)](https://github.com/iqo3333/LinChe.LYC-Tabs/blob/main/Compatibility%20Specification%20Table/zh_hant.md)"
 
-不確定是否能訪問？試試連線測試吧！
-
-測速："https://speed.iqo3333.cn"
-
-備用："https://iqo3333.github.io/speed"
-
 © LinChe.LYC 2026. All Rights Reserved
