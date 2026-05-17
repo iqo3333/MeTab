@@ -33,10 +33,4 @@ Start using LinChe.LYC now, say goodbye to tedious operations, and enjoy a smoot
 
 🔗 Compatibility Specification Table "[View Now (English)](https://github.com/iqo3333/LinChe.LYC-TabsLinChe.LYC-Tabs/blob/main/Compatibility%20Specification%20Table/en.md)"
 
-Not sure if it works? Try the connection test!
-
-Speed Test: "https://speed.iqo3333.cn"
-
-Backup: "https://iqo3333.github.io/speed"
-
 © LinChe.LYC 2026. All Rights Reserved
