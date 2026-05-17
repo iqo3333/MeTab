@@ -33,10 +33,4 @@
 
 🔗 互換性仕様表 "[今すぐ見る（日本語）](https://github.com/iqo3333/LinChe.LYC-Tabs/blob/main/Compatibility%20Specification%20Table/ja_jp.md)"
 
-アクセスできるか不安ですか？接続テストを試してください！
-
-速度テスト："https://speed.iqo3333.cn"
-
-予備："https://iqo3333.github.io/speed"
-
 © LinChe.LYC 2026. All Rights Reserved
