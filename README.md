@@ -32,10 +32,4 @@
 
 🔗 兼容性规格表"[立即查看(简体中文)](https://github.com/iqo3333/LinChe.LYC-Tabs/blob/main/Compatibility%20Specification%20Table/zh_cn.md)" 
 
-不确定是否能访问？试试连接测试呢！
-
-测试①："https://speed.iqo3333.cn"
-
-测试②："https://iqo3333.github.io/speed"
-
 © 林澈.LYC 2026. All Rights Reserved
