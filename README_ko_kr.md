@@ -32,10 +32,4 @@
 
 🔗 호환성 사양표 "[지금 보기 (한국어)](https://github.com/iqo3333/LinChe.LYC-Tabs/blob/main/Compatibility%20Specification%20Table/ko_kr.md)"
 
-접속이 안 될까 걱정되시나요? 연결 테스트를 해보세요!
-
-속도 테스트: "https://speed.iqo3333.cn"
-
-백업: "https://iqo3333.github.io/speed"
-
 © LinChe.LYC 2026. All Rights Reserved
