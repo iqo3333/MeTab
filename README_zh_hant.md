@@ -2,11 +2,12 @@
 
 <p align="center" class="language" title="Language selection 语言选择">
   <a href="README.md">🇨🇳简体中文</a> | 
-<a href="README_ja_jp.md">🇯🇵日本語</a> | 
+<a href="README_ja_jp.md">🇯🇵日本語(❌️)</a> | 
     <b>🇭🇰繁體中文</b> | 
-<a href="README_ko_kr.md">🇰🇷한국어</a> |
-  <a href="README_en.md">🇺🇸English</a> 
+<a href="README_ko_kr.md">🇰🇷한국어(❌️)</a> |
+  <a href="README_en.md">🇺🇸English(❌️)</a> 
 </p>
+<p align="center"><b><font color="red">「(❌️)表示該語言的簡介已停止更新！」</font></b></p>
 <hr>
 
 **告別雜亂標籤頁，快速訪問網站或搜尋內容，一切盡在掌握。林澈.LYC 標籤頁提供清爽界面與高效操作體驗，讓瀏覽器新標籤頁更簡潔、智能。**
