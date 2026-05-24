@@ -1,12 +1,13 @@
 # LinChe.LYC-탭 심플하고 아름답게, 효율에 집중!
 
 <p align="center" class="language" title="Language selection 语言选择">
-  <a href="README_en.md">🇺🇸English</a> | 
-  <a href="README_ja_jp.md">🇯🇵日本語</a> | 
-    <b>🇰🇷한국어</b> | 
+  <a href="README_en.md">🇺🇸English(❌️)</a> | 
+  <a href="README_ja_jp.md">🇯🇵日本語(❌️)</a> | 
+    <b>🇰🇷한국어(❌️)</b> | 
   <a href="README.md">🇨🇳简体中文</a> | 
   <a href="README_zh_hant.md">🇭🇰繁體中文</a> 
 </p>
+<p align="center"><b><font color="red">"(❌️)는 해당 언어의 소개가 업데이트 중단되었음을 의미합니다!"</font></b></p>
 <hr>
 
 **지저분한 탭은 이제 그만! 웹사이트 접속이나 검색을 빠르게 수행할 수 있습니다. LinChe.LYC 탭은 깔끔한 인터페이스와 효율적인 조작 경험을 제공하여 새 탭 페이지를 더 스마트하게 만듭니다.**
