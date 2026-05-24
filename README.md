@@ -1,12 +1,13 @@
 # 林澈.LYC 标签页 – 简约美观，专注高效！
 
 <p align="center" class="language" title="Language selection 语言选择">
-  <a href="README_en.md">🇺🇸English</a> | 
-  <a href="README_ja_jp.md">🇯🇵日本語</a> | 
+  <a href="README_en.md">🇺🇸English(❌️)</a> | 
+  <a href="README_ja_jp.md">🇯🇵日本語(❌️)</a> | 
   <b>🇨🇳简体中文</b> | 
   <a href="README_zh_hant.md">🇭🇰繁體中文</a> | 
-  <a href="README_ko_kr.md">🇰🇷한국어</a> 
+  <a href="README_ko_kr.md">🇰🇷한국어(❌️)</a> 
 </p>
+<p align="center"><b>(❌️)表示该语言的简介已停止更新！</font></b></p>
 <hr>
 
 **告别杂乱标签页，快速访问网站或搜索内容，一切尽在掌握。林澈.LYC 标签页提供清爽界面与高效操作体验，让浏览器新标签页更简洁、智能。**
