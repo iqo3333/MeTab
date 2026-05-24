@@ -1,5 +1,7 @@
 # Compatibility Specification
 
+<p align="center"><b><font color="red">⚠️The compatibility specification table for this language has ceased updates!⚠️</font></b></p>
+
 This website is built with **HTML5**, **CSS3**, **JavaScript (ES6+)**, and some advanced **CSS animation/layout features**.
 
 Minimum supported browser versions for full functionality:
