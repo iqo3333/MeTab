@@ -1,4 +1,4 @@
-# 林澈.LYC 標籤頁 – 簡約美觀，專注高效！
+# MeTab – 簡約美觀，專注高效！
 
 <p align="center" class="language" title="Language selection 语言选择">
   <a href="README.md">🇨🇳简体中文</a> | 
@@ -28,6 +28,6 @@
 
 - 访问预览页面：[https://tab.iqo3333.cn](https://tab.iqo3333.cn)
 
-- 查看兼容性規格表：[立即查看(繁體中文)](https://github.com/iqo3333/LinChe.LYC-Tabs/blob/main/Compatibility%20Specification%20Table/zh_hant.md)  
+- 查看兼容性規格表：[立即查看(繁體中文)](https://github.com/iqo3333/MeTab/blob/main/Compatibility%20Specification%20Table/zh_hant.md)  
 
-© 林澈.LYC 2026. All Rights Reserved
+© 林澈 2026. All Rights Reserved
