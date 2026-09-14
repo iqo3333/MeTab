@@ -1,11 +1,8 @@
 # MeTab – 简约美观，专注高效！
 
 <p align="center" class="language" title="Language selection 语言选择">
-  <a href="README_en.md">🇺🇸English(❌️)</a> | 
-  <a href="README_ja_jp.md">🇯🇵日本語(❌️)</a> | 
   <b>🇨🇳简体中文</b> | 
   <a href="README_zh_hant.md">🇭🇰繁體中文</a> | 
-  <a href="README_ko_kr.md">🇰🇷한국어(❌️)</a>
 </p>
 
 <p align="center"><b>(❌️)表示该语言的简介已停止更新！</b></p>
