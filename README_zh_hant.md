@@ -2,7 +2,7 @@
 
 <p align="center" class="language" title="Language selection 語言選擇">
   <b>🇭🇰繁體中文✅️</b> | 
-  <a href="README_zh_cn.md">🇨🇳简体中文</a> | 
+  <a href="README_zh_cn.md">🇨🇳简体中文</a> 
 </p>
 <hr>
 
