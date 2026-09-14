@@ -4,9 +4,6 @@
   <b>🇨🇳简体中文✅️</b> | 
   <a href="README_zh_hant.md">🇭🇰繁體中文</a> | 
 </p>
-
-<p align="center"><b>(❌️)表示该语言的简介已停止更新！</b></p>
-
 <hr>
 
 <p align="center">
