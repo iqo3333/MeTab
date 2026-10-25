@@ -1,4 +1,4 @@
-# MeTab – 简约美观，专注高效！
+<img width="1599" height="899" alt="image" src="https://github.com/user-attachments/assets/a0d7118b-267f-488a-a0d6-e0e24a7827c6" /># MeTab – 简约美观，专注高效！
 
 <p align="center" class="language" title="Language selection 语言选择">
   <b>🇨🇳简体中文✅️</b> | 
@@ -256,6 +256,18 @@ MeTab 基于现代 Web 技术构建。
 </p>
 
 ---
+## 📄 许可证
+
+本项目采用 **林澈.LYC 自定义非商业性使用许可证**。
+
+您可以在遵守许可证条款的前提下，自由使用、复制、分享、修改及分发本项目，但必须保留适当的作者署名，并明确标注修改内容。
+
+**未经版权所有者事先明确的书面许可，禁止将本项目用于商业目的。**
+
+详细授权范围、使用限制及免责声明，请参阅项目根目录中的 `LICENSE` 文件。
+
+版权所有 © 2026 林澈.LYC。保留所有未明确授予的权利。
+---
 
 <p align="center">
 
@@ -266,4 +278,5 @@ MeTab 基于现代 Web 技术构建。
 © 林澈 2026. All Rights Reserved.
 
 </p>
-<img width="1600" height="850" alt="屏幕截图 2026-08-28 173936" src="https://github.com/user-attachments/assets/ec78a7d2-0ca0-40fe-8f90-5221a746f7f3" />
+<img width="1599" height="899" alt="屏幕截图 2026-10-25 172804" src="https://github.com/user-attachments/assets/ca01ba6f-da9e-4ebe-9d0b-6c3b5e310d96" />
+
