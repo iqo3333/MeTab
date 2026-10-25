@@ -10,20 +10,6 @@
 <p align="center"><b><font color="red">"(❌️) indicates that the introduction for this language has ceased updates!"</font></b></p>
 <hr>
 
-**Say goodbye to cluttered tabs and quickly access websites or search content. LinChe.LYC Tabs offers a clean interface and efficient operations, making your new tab page simple and smart.**
-
-## 🔹 Key Features
-
-- **Search Engines**: Built-in multiple search engines, search keywords directly without leaving the page.
-
-- **Shortcut Management**: Customize your frequently used website icons for one-click access. (Requires code modification)
-
-- **Dynamic Backgrounds**: Use video or image backgrounds for a high-quality visual experience. (Can add more via code)
-
-- **Open Source**: Fully open-source code, customizable themes and styles, commercial use prohibited.
-
----
-
 ## 🌐 Try it Now
 
 - Preview page: [https://tab.iqo3333.cn](https://tab.iqo3333.cn)
