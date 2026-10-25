@@ -256,6 +256,18 @@ MeTab 基於現代 Web 技術構建。
 </p>
 
 ---
+## 📄 許可證
+
+本專案採用 **林澈.LYC 自訂非商業性使用許可證**。
+
+在遵守許可證條款的前提下，您可以自由使用、複製、分享、修改及分發本專案，但必須保留適當的作者署名，並明確標註修改內容。
+
+**未經版權所有者事先明確書面許可，禁止將本專案用於商業用途。**
+
+詳細授權範圍、使用限制及免責聲明，請參閱專案根目錄中的 `LICENSE` 檔案。
+
+版權所有 © 2026 林澈.LYC。保留所有未明確授予的權利。
+---
 
 <p align="center">
 
@@ -266,5 +278,4 @@ MeTab 基於現代 Web 技術構建。
 © 林澈 2026. All Rights Reserved.
 
 </p>
-<img width="1600" height="850" alt="屏幕截图 2026-08-28 173936" src="https://github.com/user-attachments/assets/ec78a7d2-0ca0-40fe-8f90-5221a746f7f3" />
-
+<img width="1599" height="899" alt="image" src="https://github.com/user-attachments/assets/a0d7118b-267f-488a-a0d6-e0e24a7827c6" />
