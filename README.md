@@ -254,6 +254,7 @@ MeTab 基于现代 Web 技术构建。
 </p>
 
 ---
+
 ## 📄 许可证
 
 本项目采用 **林澈.LYC 自定义非商业性使用许可证**。
@@ -265,6 +266,7 @@ MeTab 基于现代 Web 技术构建。
 详细授权范围、使用限制及免责声明，请参阅项目根目录中的 `LICENSE` 文件。
 
 版权所有 © 2026 林澈.LYC。保留所有未明确授予的权利。
+
 ---
 
 <p align="center">
@@ -276,5 +278,4 @@ MeTab 基于现代 Web 技术构建。
 © 林澈 2026. All Rights Reserved.
 
 </p>
-<img width="1599" height="899" alt="image" src="https://github.com/user-attachments/assets/a0d7118b-267f-488a-a0d6-e0e24a7827c6" /># MeTab – 简约美观，专注高效！
-
+<img width="1599" height="899" alt="image" src="https://github.com/user-attachments/assets/a0d7118b-267f-488a-a0d6-e0e24a7827c6" />
