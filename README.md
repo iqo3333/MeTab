@@ -1,5 +1,3 @@
-<img width="1599" height="899" alt="image" src="https://github.com/user-attachments/assets/a0d7118b-267f-488a-a0d6-e0e24a7827c6" /># MeTab – 简约美观，专注高效！
-
 <p align="center" class="language" title="Language selection 语言选择">
   <b>🇨🇳简体中文✅️</b> | 
   <a href="README_zh_hant.md">🇭🇰繁體中文</a> 
@@ -278,5 +276,5 @@ MeTab 基于现代 Web 技术构建。
 © 林澈 2026. All Rights Reserved.
 
 </p>
-<img width="1599" height="899" alt="屏幕截图 2026-10-25 172804" src="https://github.com/user-attachments/assets/ca01ba6f-da9e-4ebe-9d0b-6c3b5e310d96" />
+<img width="1599" height="899" alt="image" src="https://github.com/user-attachments/assets/a0d7118b-267f-488a-a0d6-e0e24a7827c6" /># MeTab – 简约美观，专注高效！
 
