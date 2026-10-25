@@ -1,0 +1,7 @@
+# MeTab 音乐播放列表
+# 格式：歌曲名称 | 歌手名称 | 音频链接 | 封面图片链接（可选） | LRC 歌词链接（可选）
+# 不填写封面时，播放器会尝试通过 Apple/iTunes 搜索歌曲封面。
+# 歌曲名称 | 歌手名称 | music/song.mp3 | images/cover.jpg
+# 在线歌曲 | 歌手名称 | https://example.com/music/song.mp3 | https://example.com/images/cover.jpg | https://example.com/lyrics/song.lrc
+#示例：↓⚠️：“#”为注释符号使用中不要添加！！！
+#日不落 | 蔡依林 | https://tab.iqo3333.cn/music/日不落/日不落.ogg | https://tab.iqo3333.cn/music/日不落/日不落.jpg | https://tab.iqo3333.cn/music/日不落/日不落.lrc
