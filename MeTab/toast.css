@@ -1,0 +1,120 @@
+
+/* =====================================================
+   MeTab Toast
+   独立轻提示组件
+===================================================== */
+
+#metabToastContainer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: calc(24px + env(safe-area-inset-bottom));
+
+  z-index: 99999;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 16px;
+
+  pointer-events: none;
+}
+
+/* Toast 主体 */
+.metab-toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: fit-content;
+  max-width: min(420px, 100%);
+  box-sizing: border-box;
+
+  padding: 13px 17px;
+
+  color: #fff;
+  background: rgba(35, 35, 35, 0.72);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 14px;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.16),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+  opacity: 0;
+  transform: translateY(12px) scale(0.96);
+
+  transition:
+    opacity .25s ease,
+    transform .25s cubic-bezier(.2, .8, .2, 1);
+}
+
+/* 显示状态 */
+.metab-toast.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 消失状态 */
+.metab-toast.hide {
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+}
+
+/* 图标 */
+.metab-toast-icon {
+  flex-shrink: 0;
+
+  width: 21px;
+  height: 21px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.metab-toast-icon svg {
+  width: 21px;
+  height: 21px;
+  display: block;
+}
+
+/* 提示文字 */
+.metab-toast-message {
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 500;
+
+  overflow-wrap: anywhere;
+}
+
+/* 不同类型 */
+.metab-toast-info .metab-toast-icon {
+  color: #60a5fa;
+}
+
+.metab-toast-success .metab-toast-icon {
+  color: #4ade80;
+}
+
+.metab-toast-warning .metab-toast-icon {
+  color: #fbbf24;
+}
+
+.metab-toast-error .metab-toast-icon {
+  color: #f87171;
+}
+
+/* 减少动态效果 */
+@media (prefers-reduced-motion: reduce) {
+  .metab-toast {
+    transition: opacity .15s ease;
+    transform: none;
+  }
+}

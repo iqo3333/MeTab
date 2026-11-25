@@ -1,0 +1,15 @@
+
+{
+  "manifest_version": 3,
+  "name": "MeTab 新标签页",
+  "version": "1.0.1",
+  "description": "简约、美观且专注高效的浏览器新标签页。",
+  "icons": {
+    "16": "icons/favicon.png",
+    "48": "icons/favicon.png",
+    "128": "icons/favicon.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  }
+}

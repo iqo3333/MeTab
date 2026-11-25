@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="robots" content="noindex, follow">
+  <title>404 · 页面不存在 | MeTab</title>
+  <link rel="icon" href="icons/favicon.png" type="image/png">
+
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #fff;
+      --text: #202124;
+      --secondary: #70757a;
+      --line: #dadce0;
+      --soft: #f8f9fa;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      padding: 0 6%;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: inherit;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -.3px;
+    }
+
+    .logo {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 15px;
+      letter-spacing: -1px;
+    }
+
+    main {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 20px 70px;
+    }
+
+    .game {
+      width: min(680px, 100%);
+      margin-bottom: 42px;
+    }
+
+    .game-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      color: var(--secondary);
+      font-family: monospace;
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+
+    .game-top strong {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .game-area {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      touch-action: manipulation;
+      cursor: pointer;
+      outline: none;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 150px;
+      image-rendering: pixelated;
+    }
+
+    .game-hint {
+      margin-top: 12px;
+      text-align: center;
+      color: #80868b;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    .game-hint kbd {
+      display: inline-block;
+      min-width: 24px;
+      padding: 1px 5px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      color: #5f6368;
+      font: inherit;
+    }
+
+    .error {
+      text-align: center;
+    }
+
+    .error-code {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      color: #5f6368;
+    }
+
+    h1 {
+      margin: 14px 0 10px;
+      font-size: clamp(24px, 5vw, 32px);
+      font-weight: 500;
+      letter-spacing: -.8px;
+    }
+
+    .description {
+      max-width: 360px;
+      margin: 0 auto;
+      color: var(--secondary);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .home, .back {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 20px;
+      border-radius: 5px;
+      font-size: 13px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: background .2s, border-color .2s;
+    }
+
+    .home {
+      background: #202124;
+      color: #fff;
+    }
+    .home:hover { background: #3c4043; }
+
+    .back {
+      background: #fff;
+      color: #202124;
+      border: 1px solid var(--line);
+    }
+    .back:hover { background: var(--soft); }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: #9aa0a6;
+      font-size: 11px;
+    }
+
+    @media (max-width: 480px) {
+      header { height: 64px; padding: 0 22px; }
+      main { padding: 15px 20px 50px; }
+      .game { margin-bottom: 35px; }
+      canvas { height: 125px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="brand" href="/" aria-label="MeTab 首页">
+    <span class="logo">
+      <img class="brand-avatar" id="brand-avatar" src="icons/favicon.png" alt="" width="28" height="28">
+    </span>
+      <span>MeTab</span>
+    </a>
+  </header>
+
+  <main>
+    <section class="game" aria-label="恐龙跳跃游戏">
+      <div class="game-top">
+        <span id="game-label">DINO RUN</span>
+        <span><span id="score-label">HI</span> <strong id="best">00000</strong> <span id="current">00000</span></span>
+      </div>
+
+      <div class="game-area" id="game-area" tabindex="0" role="button" aria-label="点击开始或跳跃">
+        <canvas id="game" width="680" height="150"></canvas>
+      </div>
+
+      <div class="game-hint" id="hint">
+        按 <kbd>空格</kbd> 或 <kbd>↑</kbd> 跳跃 · 点击游戏区域也可以
+      </div>
+    </section>
+
+    <section class="error">
+      <p class="error-code">404</p>
+      <h1 id="title">页面不存在</h1>
+      <p class="description" id="description">
+        你要找的页面似乎不在这里。<br>
+        不如陪小恐龙跑一会儿。
+      </p>
+      <div class="actions">
+        <button class="back" id="back">返回上一页</button>
+        <a class="home" href="/" id="home">返回主页</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>© 林澈 <span id="year"></span> All Rights Reserved</footer>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const traditional = /^\/zh_hant(?:\/|$)/i.test(location.pathname);
+      document.documentElement.lang = traditional ? 'zh-Hant' : 'zh-CN';
+// 根据页面语言设置品牌图标路径
+document.getElementById('brand-avatar').src = traditional
+  ? '../icons/favicon.png'
+  : 'icons/favicon.png';
+
+      const text = traditional ? {
+        title: '找不到頁面',
+        description: '你要找的頁面似乎不在這裡。<br>不如陪小恐龍跑一會兒。',
+        home: '返回首頁',
+        back: '返回上一頁',
+        hint: '按 <kbd>空白鍵</kbd> 或 <kbd>↑</kbd> 跳躍 · 點擊遊戲區域也可以',
+        start: '按空白鍵或點擊開始',
+        restart: '遊戲結束 · 按空白鍵重新開始',
+        label: '恐龍奔跑',
+        hi: '最高分'
+      } : {
+        title: '页面不存在',
+        description: '你要找的页面似乎不在这里。<br>不如陪小恐龙跑一会儿。',
+        home: '返回主页',
+        back: '返回上一页',
+        hint: '按 <kbd>空格</kbd> 或 <kbd>↑</kbd> 跳跃 · 点击游戏区域也可以',
+        start: '按空格或点击开始',
+        restart: '游戏结束 · 按空格重新开始',
+        label: '恐龙奔跑',
+        hi: '最高分'
+      };
+
+      document.getElementById('title').textContent = text.title;
+      document.getElementById('description').innerHTML = text.description;
+      document.getElementById('home').textContent = text.home;
+      document.getElementById('back').textContent = text.back;
+      document.getElementById('hint').innerHTML = text.hint;
+      document.getElementById('game-label').textContent = text.label;
+      document.getElementById('score-label').textContent = text.hi;
+      document.getElementById('year').textContent = new Date().getFullYear();
+      document.title = traditional
+        ? '404 · 找不到頁面 | MeTab'
+        : '404 · 页面不存在 | MeTab';
+
+      // 绑定返回上一页逻辑（支持安全退回，若无上一页历史则退回主页）
+      document.getElementById('back').addEventListener('click', () => {
+        if (window.history.length > 1) {
+          history.back();
+        } else {
+          location.href = '/';
+        }
+      });
+
+      const canvas = document.getElementById('game');
+      const ctx = canvas.getContext('2d');
+      const area = document.getElementById('game-area');
+      const scoreEl = document.getElementById('current');
+      const bestEl = document.getElementById('best');
+
+      const STORE = 'metab_404_dino_best';
+      let best = 0;
+
+      try {
+        best = Number(localStorage.getItem(STORE)) || 0;
+      } catch (_) {}
+
+      bestEl.textContent = String(best).padStart(5, '0');
+
+      const W = 680;
+      const H = 150;
+      const groundY = 125;
+
+      let running = false;
+      let over = false;
+      let score = 0;
+      let speed = 5;
+      let lastTime = 0;
+      let spawn = 0;
+      let groundOffset = 0;
+      let animationTime = 0;
+      let obstacles = [];
+      let clouds = [];
+
+      const dino = {
+        x: 55,
+        y: groundY - 47,
+        w: 44,
+        h: 47,
+        vy: 0,
+        jumping: false
+      };
+
+      function reset() {
+        score = 0;
+        speed = 5;
+        spawn = 60;
+        obstacles = [];
+        clouds = [
+          { x: 190, y: 35, w: 46 },
+          { x: 440, y: 50, w: 46 },
+          { x: 600, y: 25, w: 46 }
+        ];
+        dino.y = groundY - dino.h;
+        dino.vy = 0;
+        dino.jumping = false;
+        groundOffset = 0;
+        animationTime = 0;
+        over = false;
+        running = true;
+        lastTime = 0;
+        document.getElementById('hint').innerHTML = text.hint;
+        requestAnimationFrame(loop);
+      }
+
+      function drawDino() {
+        const x = Math.round(dino.x);
+        const y = Math.round(dino.y);
+        ctx.fillStyle = '#535353';
+
+        ctx.fillRect(x + 22, y + 0, 22, 4);
+        ctx.fillRect(x + 20, y + 4, 24, 4);
+        ctx.fillRect(x + 20, y + 8, 24, 4);
+        ctx.fillRect(x + 20, y + 12, 14, 4);
+        ctx.fillRect(x + 20, y + 16, 22, 4);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(x + 24, y + 4, 4, 4);
+
+        ctx.fillStyle = '#535353';
+        ctx.fillRect(x + 18, y + 20, 14, 4);
+        ctx.fillRect(x + 16, y + 24, 18, 4);
+        ctx.fillRect(x + 10, y + 28, 24, 4);
+        ctx.fillRect(x + 8,  y + 32, 24, 4);
+        ctx.fillRect(x + 6,  y + 36, 24, 4);
+
+        ctx.fillRect(x + 32, y + 24, 4, 4);
+        ctx.fillRect(x + 34, y + 26, 2, 6);
+
+        ctx.fillRect(x + 0, y + 24, 6, 4);
+        ctx.fillRect(x + 2, y + 28, 8, 4);
+        ctx.fillRect(x + 4, y + 32, 6, 4);
+
+        if (over) {
+          ctx.fillStyle = '#535353';
+          ctx.fillRect(x + 24, y + 4, 4, 4);
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(x + 25, y + 5, 2, 2);
+
+          ctx.fillStyle = '#535353';
+          ctx.fillRect(x + 12, y + 40, 4, 7);
+          ctx.fillRect(x + 24, y + 40, 4, 7);
+        } else if (dino.jumping) {
+          ctx.fillRect(x + 12, y + 40, 4, 4);
+          ctx.fillRect(x + 24, y + 40, 4, 4);
+        } else {
+          const step = Math.floor(animationTime / 80) % 2;
+          if (step === 0) {
+            ctx.fillRect(x + 12, y + 40, 4, 4);
+            ctx.fillRect(x + 24, y + 40, 4, 7);
+            ctx.fillRect(x + 24, y + 45, 6, 2);
+          } else {
+            ctx.fillRect(x + 12, y + 40, 4, 7);
+            ctx.fillRect(x + 10, y + 45, 6, 2);
+            ctx.fillRect(x + 24, y + 40, 4, 4);
+          }
+        }
+      }
+
+      function drawCactus(o) {
+        const x = Math.round(o.x);
+        const y = Math.round(groundY - o.h);
+        const w = o.w;
+        const h = o.h;
+        ctx.fillStyle = '#535353';
+
+        if (o.type === 'single') {
+          const trunkW = 6;
+          const cx = x + Math.floor((w - trunkW) / 2);
+          ctx.fillRect(cx, y, trunkW, h);
+          ctx.fillRect(x, y + 10, 4, 14);
+          ctx.fillRect(x, y + 20, cx - x, 4);
+          ctx.fillRect(x + w - 4, y + 6, 4, 14);
+          ctx.fillRect(cx + trunkW, y + 16, x + w - 4 - (cx + trunkW), 4);
+        } else {
+          const halfW = Math.floor(w / 2);
+          ctx.fillRect(x + 4, y + 4, 5, h - 4);
+          ctx.fillRect(x, y + 14, 3, 10);
+          ctx.fillRect(x, y + 20, 5, 3);
+          ctx.fillRect(x + halfW + 4, y, 5, h);
+          ctx.fillRect(x + halfW + 10, y + 10, 3, 10);
+          ctx.fillRect(x + halfW + 5, y + 17, 7, 3);
+        }
+      }
+
+      function drawGround() {
+        ctx.fillStyle = '#535353';
+        ctx.fillRect(0, groundY, W, 1);
+
+        ctx.fillStyle = '#acacac';
+        for (let x = -groundOffset; x < W; x += 35) {
+          ctx.fillRect(x, groundY + 8, 4, 1);
+          ctx.fillRect(x + 15, groundY + 14, 2, 1);
+          ctx.fillRect(x + 22, groundY + 5, 6, 1);
+        }
+      }
+
+      function drawCloud(c) {
+        const x = Math.round(c.x);
+        const y = Math.round(c.y);
+        ctx.fillStyle = '#d3d3d3';
+
+        ctx.fillRect(x + 12, y, 24, 4);
+        ctx.fillRect(x + 6, y + 4, 36, 4);
+        ctx.fillRect(x, y + 8, 46, 4);
+        ctx.fillRect(x, y + 12, 46, 4);
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+
+        clouds.forEach(drawCloud);
+        drawGround();
+        obstacles.forEach(drawCactus);
+        drawDino();
+
+        if (!running && !over) {
+          ctx.fillStyle = '#70757a';
+          ctx.font = '12px monospace';
+          ctx.textAlign = 'center';
+          ctx.fillText(text.start, W / 2, 62);
+        }
+
+        if (over) {
+          ctx.fillStyle = 'rgba(255,255,255,.86)';
+          ctx.fillRect(0, 0, W, H);
+
+          ctx.fillStyle = '#202124';
+          ctx.textAlign = 'center';
+          ctx.font = 'bold 15px monospace';
+          ctx.fillText(
+            traditional ? '遊戲結束' : '游戏结束',
+            W / 2, 54
+          );
+
+          ctx.fillStyle = '#70757a';
+          ctx.font = '12px monospace';
+          ctx.fillText(
+            traditional ? '按空白鍵或點擊重新開始' : '按空格或点击重新开始',
+            W / 2, 78
+          );
+        }
+      }
+
+      function startJump() {
+        if (over || !running) {
+          reset();
+          return;
+        }
+
+        if (!dino.jumping) {
+          dino.vy = -11.5;
+          dino.jumping = true;
+        }
+      }
+
+      function collide(a, b) {
+        return (
+          a.x + 8 < b.x + b.w - 4 &&
+          a.x + a.w - 6 > b.x + 4 &&
+          a.y + 6 < groundY &&
+          a.y + a.h - 4 > groundY - b.h + 4
+        );
+      }
+
+      function endGame() {
+        running = false;
+        over = true;
+
+        const finalScore = Math.floor(score);
+        if (finalScore > best) {
+          best = finalScore;
+          bestEl.textContent = String(best).padStart(5, '0');
+
+          try {
+            localStorage.setItem(STORE, String(best));
+          } catch (_) {}
+        }
+
+        document.getElementById('hint').textContent = text.restart;
+        draw();
+      }
+
+      function loop(timestamp) {
+        if (!running) return;
+
+        if (!lastTime) lastTime = timestamp;
+        const dt = Math.min((timestamp - lastTime) / 16.67, 2);
+        lastTime = timestamp;
+
+        animationTime += dt * 16.67;
+        score += dt * speed * 0.1;
+        speed = Math.min(5 + score / 400, 10);
+
+        scoreEl.textContent = String(Math.floor(score)).padStart(5, '0');
+
+        dino.vy += 0.65 * dt;
+        dino.y += dino.vy * dt;
+
+        if (dino.y >= groundY - dino.h) {
+          dino.y = groundY - dino.h;
+          dino.vy = 0;
+          dino.jumping = false;
+        }
+
+        groundOffset = (groundOffset + speed * dt) % 35;
+
+        clouds.forEach(c => {
+          c.x -= speed * 0.2 * dt;
+          if (c.x < -c.w) c.x = W + 20;
+        });
+
+        spawn -= dt;
+        if (spawn <= 0) {
+          const isDouble = Math.random() > 0.6;
+          const h = 36 + Math.floor(Math.random() * 10);
+          const w = isDouble ? 34 : 20;
+
+          obstacles.push({
+            x: W + 10,
+            w,
+            h,
+            type: isDouble ? 'double' : 'single'
+          });
+          spawn = 55 + Math.random() * 45;
+        }
+
+        obstacles.forEach(o => {
+          o.x -= speed * dt;
+          if (collide(dino, o)) endGame();
+        });
+
+        obstacles = obstacles.filter(o => o.x > -40);
+
+        draw();
+
+        if (running) requestAnimationFrame(loop);
+      }
+
+      function handleAction(event) {
+        if (event) event.preventDefault();
+        startJump();
+      }
+
+      area.addEventListener('pointerdown', handleAction);
+
+      document.addEventListener('keydown', event => {
+        if (
+          event.code === 'Space' ||
+          event.code === 'ArrowUp'
+        ) {
+          if (event.repeat) return;
+          event.preventDefault();
+          startJump();
+        }
+      });
+
+      clouds = [
+        { x: 190, y: 35, w: 46 },
+        { x: 440, y: 50, w: 46 },
+        { x: 600, y: 25, w: 46 }
+      ];
+      draw();
+    })();
+  </script>
+</body>
+</html>

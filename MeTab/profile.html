@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="认识 MeTab——由林澈.LYC 打造的简约、美观且专注高效的浏览器新标签页。">
+<title>MeTab — 让每一次打开都更简单</title>
+  <link rel="icon"
+        href="icons/favicon.png"
+        type="image/png">
+<style>
+:root {
+  --site-primary: #171717;
+  --site-secondary: #e9e9e9;
+  --site-background: #f7f7f5;
+  --site-on-primary: #ffffff;
+  --site-on-secondary: #202020;
+  --site-on-background: #181818;
+  --site-font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --site-font-heading: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+  color-scheme: light dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--site-font-body); color: light-dark(#191919, #f5f5f5); background: light-dark(#f7f7f5, #111111); }
+#app { min-height: 100vh; width: 100%; border-radius: 0; background-color: light-dark(var(--site-background), #111111); color: light-dark(var(--site-on-background), #f5f5f5); overflow: hidden; position: relative; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+.wrap { width: min(1120px, calc(100% - 48px)); margin: 0 auto; }
+.nav { height: 76px; display:flex; align-items:center; justify-content:space-between; gap:24px; border-bottom:1px solid light-dark(#deded9, #303030); }
+.brand { display:flex; align-items:center; gap:11px; font-weight:750; letter-spacing:-.04em; font-size:21px; }
+.logo { width:34px; height:34px; border-radius:12px; display:grid; place-items:center; color:white; font-weight:800; font-size:17px; letter-spacing:-.08em; background:linear-gradient(145deg,#161616 0%,#575757 55%,#bcbcbc 100%); box-shadow:inset 0 1px 1px #ffffff75, 0 4px 12px #00000018; }
+.nav-links { display:flex; align-items:center; gap:28px; color:light-dark(#666, #b4b4b4); font-size:13px; }
+.nav-links a:hover { color:light-dark(#111,#fff); }
+.nav-cta, .button { display:inline-flex; align-items:center; justify-content:center; gap:9px; border-radius:999px; padding:12px 19px; background:var(--site-primary); color:var(--site-on-primary); font-size:13px; font-weight:650; border:1px solid var(--site-primary); transition:transform .2s, opacity .2s; }
+.nav-cta:hover,.button:hover { transform:translateY(-2px); opacity:.88; }
+.button.secondary { background:transparent; color:light-dark(#202020,#f5f5f5); border-color:light-dark(#d2d2cc,#454545); }
+.hero { padding:88px 0 82px; display:grid; grid-template-columns: .92fr 1.08fr; align-items:center; gap:50px; }
+.eyebrow { display:inline-flex; align-items:center; gap:8px; color:light-dark(#666,#bcbcbc); text-transform:uppercase; letter-spacing:.14em; font-size:11px; font-weight:700; }
+.dot { width:7px; height:7px; border-radius:50%; background:#6b9e78; box-shadow:0 0 0 4px #6b9e781b; }
+h1,h2,h3,p { margin-top:0; }
+h1 { font-family:var(--site-font-heading); font-size:calc( clamp(42px, 5.6vw, 70px) * var(--site-heading-scale)); line-height:1.08; letter-spacing:-.065em; margin:22px 0 22px; font-weight:760; }
+.gradient { background:linear-gradient(110deg, light-dark(#171717,#fff) 10%, light-dark(#888,#b6b6b6) 95%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.lead { max-width:440px; color:light-dark(#686861,#b6b6b6); font-size:16px; line-height:1.9; margin-bottom:29px; }
+.actions { display:flex; flex-wrap:wrap; gap:11px; }
+.micro { margin-top:24px; color:light-dark(#92928c,#777); font-size:11px; }
+.preview-stage { position:relative; padding:20px; border-radius:30px; background:linear-gradient(145deg,light-dark(#ecece8,#242424),light-dark(#d9d9d4,#191919)); border:1px solid light-dark(#deded8,#333); }
+.preview-stage:before { content:""; position:absolute; width:220px; height:220px; border-radius:50%; background:light-dark(#fff,#666); filter:blur(70px); opacity:calc(.42 * var(--site-decoration-opacity)); right:8%; top:4%; pointer-events:none; }
+.browser { position:relative; overflow:hidden; border-radius:4px; min-height:0; aspect-ratio:1599 / 899; background:#b59bd0; color:#fff; padding:0; box-shadow:0 22px 50px #00000018; }
+.browser:before { content:none; }
+.browser-bar { display:flex; align-items:center; justify-content:flex-end; gap:8px; height:22px; position:relative; z-index:2; }
+.browser-bar i { display:none; }
+.browser-label { margin-left:auto; font-size:9px; color:#ffffffc7; letter-spacing:.1em; }
+.mock-controls { display:flex; justify-content:flex-end; gap:7px; margin-top:0; position:relative; z-index:2; }
+.mock-control { display:grid;place-items:center;width:32px;height:32px;border:1px solid #ffffff45; background:#ffffff20; color:#fff; border-radius:12px; padding:0;font-size:13px;box-shadow:inset 0 1px 1px #ffffff18; }
+.mock-content { padding:20px 10px 22px; text-align:center; position:relative; z-index:1; }
+.mock-time { font-size:clamp(42px,5vw,66px); font-weight:650; letter-spacing:.04em; text-shadow:0 2px 18px #00000020; }
+.mock-date { font-size:clamp(10px,1.15vw,14px);font-weight:600; color:#ffffffed; margin:7px 0 32px; text-shadow:0 1px 8px #00000030; }
+.mock-search { margin:auto; max-width:520px; height:44px; display:flex; align-items:center; gap:10px; text-align:left; padding:0 12px; border:1px solid #ffffff70; background:#ffffff30; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); border-radius:999px; color:#ffffffed; font-size:11px; box-shadow:0 4px 14px #00000012; }
+.mock-engine { display:flex; align-items:center; gap:5px; white-space:nowrap; padding-right:0; border-right:0; font-size:10px; }
+.mock-engine b { display:grid; place-items:center; width:17px; height:17px; border-radius:4px; color:#29c9ff; background:transparent; font-size:17px; }
+.mock-placeholder { overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+.search-icon { width:11px;height:11px;border:1.5px solid currentColor;border-radius:50%;position:relative; opacity:.75; }
+.search-icon:after { content:"";position:absolute;width:5px;height:1.5px;background:currentColor;right:-4px;bottom:-2px;transform:rotate(45deg); }
+.mock-shortcuts { display:flex; justify-content:center; gap:14px; margin-top:48px; }
+.shortcut { width:48px; display:flex; align-items:center; flex-direction:column; gap:7px; font-size:8px; color:#ffffffed; text-shadow:0 1px 5px #00000030; }
+.shortcut-icon { display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:#ffffff27;border:1px solid #ffffff58;box-shadow:inset 0 1px 1px #ffffff22;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-size:18px;font-weight:700;color:#343a40;text-shadow:none; }
+.mock-footer { position:absolute; bottom:9px; left:17px; right:17px; display:flex;flex-direction:column;align-items:center; justify-content:center; gap:4px; color:#ffffffb8; font-size:8px; z-index:2; }
+.floating-note { position:absolute; right:-13px; bottom:42px; background:light-dark(#fff,#292929); color:light-dark(#333,#eee); padding:12px 15px; border-radius:15px; box-shadow:0 12px 35px #00000015; font-size:11px; z-index:2; border:1px solid light-dark(#eee,#3c3c3c); }
+.floating-note strong { display:block; font-size:12px; margin-bottom:4px; }
+.section { padding:78px 0; }
+.section-head { max-width:590px; margin-bottom:38px; }
+.kicker { color:light-dark(#777,#aaa); font-size:11px; letter-spacing:.16em; font-weight:750; text-transform:uppercase; margin-bottom:14px; }
+h2 { font-size:calc(clamp(30px,4vw,44px) * var(--site-heading-scale)); line-height:1.15; letter-spacing:-.055em; margin-bottom:15px; }
+.section-head p { color:light-dark(#73736d,#aaa); line-height:1.8; font-size:14px; max-width:510px; }
+.features { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+.feature { border:1px solid light-dark(#e2e2dc,#333); border-radius:calc(22px * var(--site-radius-scale)); padding:27px; background:light-dark(#fff,#1a1a1a); min-height:205px; transition:transform .2s,border-color .2s; }
+.feature:hover { transform:translateY(-4px); border-color:light-dark(#bcbcb5,#555); }
+.feature-icon { width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:var(--site-secondary);color:var(--site-on-secondary);font-size:18px;margin-bottom:27px; }
+.feature h3 { font-size:16px; letter-spacing:-.025em; margin-bottom:10px; }
+.feature p { color:light-dark(#777770,#aaa); font-size:12px; line-height:1.8; margin:0; }
+.music { display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center; background:light-dark(#ecece8,#1b1b1b); border-radius:calc(28px * var(--site-radius-scale)); padding:46px; border:1px solid light-dark(#e0e0da,#303030); }
+.music h2 { font-size:calc(clamp(30px,3.8vw,42px) * var(--site-heading-scale)); }
+.music p { color:light-dark(#6f6f68,#aaa); font-size:14px; line-height:1.9; }
+.music-list { display:grid; gap:10px; }
+.track { display:flex; align-items:center; gap:13px; background:light-dark(#fff,#242424); padding:13px; border-radius:15px; border:1px solid light-dark(#e1e1db,#363636); }
+.album { width:42px;height:42px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,#b5c5bd,#e6d8c4);color:#343a36;font-size:18px; }
+.track-info { flex:1; }
+.track-info strong { display:block; font-size:12px; margin-bottom:4px; }
+.track-info span { color:light-dark(#888,#aaa); font-size:10px; }
+.play { width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:var(--site-primary);color:var(--site-on-primary);font-size:10px; }
+.pill-row { display:flex; flex-wrap:wrap; gap:8px; margin-top:23px; }
+.pill { border:1px solid light-dark(#d6d6d0,#424242); color:light-dark(#62625c,#c0c0c0); padding:7px 10px; border-radius:999px; font-size:10px; }
+.about-grid { display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:start; }
+.about-copy { color:light-dark(#707069,#aaa); font-size:14px; line-height:2; max-width:640px; }
+.quote-card { border-left:2px solid light-dark(#202020,#eee); padding:7px 0 7px 22px; color:light-dark(#252525,#eee); font-size:19px; line-height:1.65; letter-spacing:-.025em; }
+.quote-card span { display:block; margin-top:15px; color:light-dark(#888,#999); font-size:11px; letter-spacing:0; }
+.cta { text-align:center; padding:65px 24px; border-radius:calc(28px * var(--site-radius-scale)); background:var(--site-primary); color:var(--site-on-primary); position:relative; overflow:hidden; }
+.cta:after { content:"Me"; position:absolute; font-weight:900; font-size:230px; letter-spacing:-.1em; right:-20px; bottom:-100px; color:#ffffff; opacity:calc(.055 * var(--site-decoration-opacity)); pointer-events:none; }
+.cta h2 { max-width:560px; margin:0 auto 14px; }
+.cta p { color:#ffffffa6; font-size:13px; margin-bottom:25px; }
+.cta .button { background:#fff;color:#161616;border-color:#fff; position:relative; z-index:1; }
+footer { padding:27px 0 35px; display:flex; justify-content:space-between; gap:18px; align-items:center; color:light-dark(#85857f,#888); font-size:10px; }
+.footer-brand { font-weight:750; color:light-dark(#333,#ddd); font-size:12px; }
+@media (max-width:800px) { .hero { grid-template-columns:1fr; gap:42px; padding:65px 0; } .hero-copy { max-width:600px; } .preview-stage { max-width:600px; width:100%; margin:auto; } .features { grid-template-columns:repeat(2,1fr); } .music { grid-template-columns:1fr; gap:28px; padding:30px; } .about-grid { grid-template-columns:1fr; gap:25px; } }
+@media (max-width:540px) { .wrap { width:min(100% - 32px,1120px); } .nav { height:66px; } .nav-links { display:none; } .nav-cta { padding:10px 14px; font-size:11px; } .hero { padding:55px 0 50px; } h1 { font-size:46px; } .lead {
+  width: 100%;
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 1.9;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  white-space: normal;
+}
+ .preview-stage { padding:10px; border-radius:23px; } .browser {
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 1599 / 899;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #b59bd0;
+  color: #fff;
+  padding: 0;
+  box-shadow: 0 22px 50px #00000018;
+}
+
+.browser > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  inset: 0;
+}
+.mock-content { padding-top:48px; } .mock-time { font-size:37px; } .floating-note { right:-3px; bottom:20px; } .section { padding:55px 0; } .features { grid-template-columns:1fr; } .feature { min-height:0; } .feature-icon { margin-bottom:20px; } .music { padding:24px 18px; } footer { align-items:flex-start; flex-direction:column; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } *,*:before,*:after { transition:none !important; } }
+/* ===== 日间 / 夜间模式 ===== */
+
+/* 默认主题 */
+html {
+  color-scheme: light dark;
+}
+
+/* 日间模式 */
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* 夜间模式 */
+html[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+/* 导航操作区域 */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+
+  padding: 0;
+  border-radius: 50%;
+
+  border: 1px solid light-dark(#deded9, #383838);
+  background: light-dark(#ffffffa8, #252525a8);
+  color: light-dark(#333333, #eeeeee);
+
+  cursor: pointer;
+
+  transition:
+    background .2s ease,
+    border-color .2s ease,
+    color .2s ease,
+    transform .25s ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(15deg);
+  background: light-dark(#eaeae6, #353535);
+}
+
+.theme-toggle:active {
+  transform: scale(.88);
+}
+
+/* 图标切换 */
+.theme-icon {
+  position: absolute;
+  transition:
+    opacity .3s ease,
+    transform .4s cubic-bezier(.2,.8,.2,1);
+}
+
+html[data-theme="light"] .sun-icon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+html[data-theme="light"] .moon-icon {
+  opacity: 0;
+  transform: rotate(-90deg) scale(.5);
+}
+
+html[data-theme="dark"] .sun-icon {
+  opacity: 0;
+  transform: rotate(90deg) scale(.5);
+}
+
+html[data-theme="dark"] .moon-icon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
+}
+
+/* 主题过渡动画 */
+html.theme-transition,
+html.theme-transition body,
+html.theme-transition #app,
+html.theme-transition #app *,
+html.theme-transition #app *::before,
+html.theme-transition #app *::after {
+  transition:
+    background-color .4s ease,
+    color .4s ease,
+    border-color .4s ease,
+    box-shadow .4s ease !important;
+}
+
+/* 减少动态效果 */
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition,
+  html.theme-transition body,
+  html.theme-transition #app,
+  html.theme-transition #app *,
+  html.theme-transition #app *::before,
+  html.theme-transition #app *::after {
+    transition: none !important;
+  }
+}
+
+/* ===== 小屏设备内容适配 ===== */
+
+@media (max-width: 540px) {
+
+  .hero,
+  .hero-copy,
+  .preview-stage {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .hero-copy {
+    overflow-wrap: break-word;
+  }
+
+  .preview-stage {
+    padding: 10px;
+    overflow: visible;
+  }
+
+  .browser {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1599 / 899;
+    min-height: 0;
+  }
+
+  .browser > img {
+    object-fit: contain;
+  }
+
+  .floating-note {
+    max-width: calc(100% - 20px);
+    right: 0;
+    bottom: 20px;
+  }
+
+}
+
+/* 移动端 */
+@media (max-width: 540px) {
+  .nav-actions {
+    gap: 8px;
+  }
+
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+  }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="wrap">
+    <header class="nav">
+      <a class="brand" href="#top" aria-label="MeTab 首页"><img class="brand-avatar" id="brand-avatar"src="icons/favicon.png" alt="" width="28" height="28">
+    </span><span>MeTab</span></a>
+      <nav class="nav-links" aria-label="主导航"><a href="#features">功能</a><a href="#music">音乐播放器</a><a href="#about">关于 MeTab</a></nav>
+<div class="nav-actions">
+  <button class="theme-toggle"
+          id="themeToggle"
+          type="button"
+          aria-label="切换至夜间模式"
+          title="切换主题">
+    <svg class="theme-icon sun-icon"
+         xmlns="http://www.w3.org/2000/svg"
+         width="19" height="19"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.8"
+         stroke-linecap="round"
+         stroke-linejoin="round">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/>
+    </svg>
+
+    <svg class="theme-icon moon-icon"
+         xmlns="http://www.w3.org/2000/svg"
+         width="19" height="19"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.8"
+         stroke-linecap="round"
+         stroke-linejoin="round">
+      <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.463.402.807a6.5 6.5 0 0 0 8.268 8.268c.344-.215.829-.003.803.397z"/>
+    </svg>
+  </button>
+
+  <a class="nav-cta"
+     href="https://tab.iqo3333.cn/"
+     target="_blank"
+     rel="noopener noreferrer">
+    立即体验 <span aria-hidden="true">↗</span>
+  </a>
+</div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="dot"></span> A NEW TAB, MADE SIMPLE</div>
+          <h1>每一次打开，<br><span class="gradient">都更简单。</span></h1>
+          <p class="lead">MeTab 是由林澈.LYC 打造的浏览器新标签页。以简约的界面、顺手的功能和舒适的视觉体验，让浏览从打开新标签的那一刻开始。</p>
+          <div class="actions"><a class="button" href="https://tab.iqo3333.cn/" target="_blank" rel="noopener noreferrer">打开 MeTab <span aria-hidden="true">↗</span></a><a class="button secondary" href="https://github.com/iqo3333/MeTab" target="_blank" rel="noopener noreferrer">查看开源项目 <span aria-hidden="true">↗</span></a></div>
+          <div class="micro">简约设计 · 常用功能 · 专注高效</div>
+        </div>
+        <div class="preview-stage" aria-label="MeTab 新标签页界面示意">
+          <div class="browser">
+            <img src="icons/profile.png" alt="MeTab 实际新标签页界面截图" style="display:block;width:100%;height:100%;object-fit:cover;position:absolute;inset:0">
+          </div>
+          <div class="floating-note"><strong>少一点干扰</strong><span>把注意力留给重要的事。</span></div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="section-head"><div class="kicker">Thoughtful by design</div><h2>简单，不代表功能有限。</h2><p>把常用能力放在恰到好处的位置。清晰、直接，不让多余的设计打断你的节奏。</p></div>
+        <div class="features">
+          <article class="feature"><div class="feature-icon" aria-hidden="true">⌕</div><h3>多搜索引擎</h3><p>支持多种常用搜索引擎，按自己的习惯选择；输入网址也可以快速直达目标。</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">◷</div><h3>时间与日期</h3><p>清晰显示时间和日期，并提供农历信息，让新标签页不仅好看，也更实用。</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">▧</div><h3>背景自定义</h3><p>用喜欢的图片或动态背景营造专属氛围，让每次打开浏览器都有自己的风格。</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">↗</div><h3>常用快捷入口</h3><p>将常访问的网站放在触手可及的位置，减少重复操作，让浏览更顺畅。</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">♫</div><h3>内置音乐体验</h3><p>在标签页中播放音乐，支持歌词、播放进度与音量记忆等实用功能。</p></article>
+          <article class="feature"><div class="feature-icon" aria-hidden="true">⌘</div><h3>轻量与简洁</h3><p>围绕新标签页的核心场景设计，减少不必要的内容，让界面回归清爽。</p></article>
+        </div>
+      </section>
+
+      <section class="section" id="music">
+        <div class="music">
+          <div><div class="kicker">Music, right here</div><h2>让喜欢的音乐，<br>成为浏览的一部分。</h2><p>MeTab 音乐播放器不仅服务于标签页，也可以扩展到其他静态网站。通过引用相关 JavaScript 与 CSS，即可集成播放器；还支持本地音频、歌单导入、歌词显示和系统媒体控制等功能。</p><div class="pill-row"><span class="pill">本地音频</span><span class="pill">TXT / M3U 歌单</span><span class="pill">LRC 歌词</span><span class="pill">媒体控制</span></div><div style="margin-top:25px"><a class="button secondary" href="https://github.com/iqo3333/MeTab/tree/main/Music%20Player" target="_blank" rel="noopener noreferrer">探索音乐播放器 <span aria-hidden="true">↗</span></a></div></div>
+          <div class="music-list" aria-label="音乐播放器界面示意">
+            <div class="track"><div class="album">♫</div><div class="track-info"><strong>让音乐留在这一刻</strong><span>MeTab Music Player</span></div><div class="play">Ⅱ</div></div>
+            <div class="track"><div class="album" style="background:linear-gradient(135deg,#c5c8d9,#e5d6ce)">♪</div><div class="track-info"><strong>歌词同步显示</strong><span>随播放进度呈现歌词</span></div><div style="font-size:13px;color:light-dark(#777,#aaa)">♫</div></div>
+            <div class="track"><div class="album" style="background:linear-gradient(135deg,#c6d7cb,#d8d5bd)">↗</div><div class="track-info"><strong>不止于新标签页</strong><span>可集成到其他静态网站</span></div><div style="font-size:13px;color:light-dark(#777,#aaa)">＋</div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <div class="about-grid">
+          <div><div class="kicker">Made by LinChe.LYC</div><h2>一个关于简洁与效率的小项目。</h2><p class="about-copy">MeTab 从浏览器新标签页这一日常入口出发，希望把搜索、时间、快捷访问与音乐等常用体验整合在一个简洁的页面中。它持续围绕实际使用需求进行调整，也将部分项目代码公开在 GitHub，方便了解与使用。</p></div>
+          <div class="quote-card">好的界面，不需要抢走你的注意力；它只需要在你需要时，恰好在那里。<span>— MeTab 的设计想法</span></div>
+        </div>
+      </section>
+
+      <section class="section" style="padding-top:10px;padding-bottom:55px">
+        <div class="cta"><div class="kicker" style="color:#ffffff8c">Your next tab starts here</div><h2>准备好，让浏览回归简单了吗？</h2><p>现在打开 MeTab，体验简洁而顺手的新标签页。</p><a class="button" href="https://tab.iqo3333.cn/" target="_blank" rel="noopener noreferrer">立即体验 MeTab <span aria-hidden="true">↗</span></a></div>
+      </section>
+    </main>
+    <footer><div><div class="footer-brand">MeTab <span style="font-weight:400;color:light-dark(#888,#999)">by 林澈.LYC</span></div><div style="margin-top:7px">简约美观，专注高效。</div></div><div>© 2026 林澈.LYC. All Rights Reserved.</div></footer>
+  </div>
+</div>
+<script>
+// ===== MeTab 日间 / 夜间模式 =====
+
+(function () {
+  const root = document.documentElement;
+  const toggle = document.getElementById('themeToggle');
+  const storageKey = 'metab-site-theme';
+
+  if (!toggle) return;
+
+  // 获取保存的主题
+  function getTheme() {
+    try {
+      const saved = localStorage.getItem(storageKey);
+
+      if (saved === 'light' || saved === 'dark') {
+        return saved;
+      }
+    } catch (e) {}
+
+    // 默认跟随系统主题
+    return window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  }
+
+  // 应用主题
+  function applyTheme(theme, animate) {
+    if (animate) {
+      root.classList.add('theme-transition');
+    }
+
+    root.setAttribute('data-theme', theme);
+
+    toggle.setAttribute(
+      'aria-label',
+      theme === 'dark' ? '切换至日间模式' : '切换至夜间模式'
+    );
+
+    toggle.setAttribute(
+      'title',
+      theme === 'dark' ? '切换至日间模式' : '切换至夜间模式'
+    );
+
+    if (animate) {
+      requestAnimationFrame(function () {
+        setTimeout(function () {
+          root.classList.remove('theme-transition');
+        }, 450);
+      });
+    }
+  }
+
+  // 初始化主题
+  applyTheme(getTheme(), false);
+
+  // 手动切换
+  toggle.addEventListener('click', function () {
+    const currentTheme = root.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    applyTheme(newTheme, true);
+
+    try {
+      localStorage.setItem(storageKey, newTheme);
+    } catch (e) {}
+  });
+
+})();
+</script>
+</body>
+</html>
