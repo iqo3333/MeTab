@@ -1,0 +1,433 @@
+/* =====================================================
+   MeTab Ver.9.0.0 周年庆典
+   风格：黑金 / 全屏 / 动态粒子
+===================================================== */
+
+/* ===== 全屏容器 ===== */
+
+.anniversary-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  background:
+    radial-gradient(
+      ellipse at 50% 45%,
+      rgba(100, 72, 27, 0.28),
+      transparent 65%
+    ),
+    linear-gradient(
+      145deg,
+      #080807,
+      #17130b 50%,
+      #080807
+    );
+
+  color: #f8e8b9;
+
+  opacity: 1;
+  visibility: visible;
+
+  transition:
+    opacity 0.55s ease,
+    visibility 0.55s ease;
+}
+
+.anniversary-modal[hidden] {
+  display: none;
+}
+
+.anniversary-modal.is-closing {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* ===== 背景装饰 ===== */
+
+.anniversary-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+
+  background:
+    radial-gradient(
+      circle at 50% 40%,
+      rgba(218, 174, 85, 0.13),
+      transparent 38%
+    ),
+    radial-gradient(
+      circle at 15% 85%,
+      rgba(159, 111, 39, 0.12),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 15%,
+      rgba(255, 215, 140, 0.08),
+      transparent 30%
+    );
+}
+
+.anniversary-glow {
+  position: absolute;
+  z-index: -2;
+
+  width: min(75vw, 650px);
+  aspect-ratio: 1;
+
+  border-radius: 50%;
+
+  background: rgba(218, 174, 85, 0.10);
+  filter: blur(100px);
+
+  animation: anniversaryGlow 6s ease-in-out infinite alternate;
+}
+
+/* ===== 粒子 ===== */
+
+.anniversary-particles {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  pointer-events: none;
+
+  background-image:
+    radial-gradient(2px 2px at 10% 20%, rgba(255,220,145,.8) 50%, transparent 100%),
+    radial-gradient(2px 2px at 25% 75%, rgba(255,235,180,.6) 50%, transparent 100%),
+    radial-gradient(3px 3px at 80% 30%, rgba(255,210,120,.7) 50%, transparent 100%),
+    radial-gradient(2px 2px at 70% 85%, rgba(255,230,170,.7) 50%, transparent 100%),
+    radial-gradient(2px 2px at 45% 12%, rgba(255,220,145,.6) 50%, transparent 100%),
+    radial-gradient(3px 3px at 90% 65%, rgba(255,220,145,.6) 50%, transparent 100%);
+
+  background-size: 100% 100%;
+
+  animation: anniversaryParticles 12s linear infinite;
+}
+
+/* ===== 关闭按钮 ===== */
+
+.anniversary-close {
+  position: absolute;
+  top: max(22px, env(safe-area-inset-top));
+  right: max(22px, env(safe-area-inset-right));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  border: 1px solid rgba(232, 202, 139, 0.22);
+  border-radius: 50%;
+
+  color: rgba(255, 235, 190, 0.8);
+  background: rgba(255, 255, 255, 0.055);
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.anniversary-close svg {
+  width: 19px;
+  height: 19px;
+}
+
+.anniversary-close:hover {
+  color: #fff1c8;
+  background: rgba(220, 176, 91, 0.16);
+  border-color: rgba(232, 202, 139, 0.55);
+}
+
+/* ===== 内容区域 ===== */
+
+.anniversary-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: min(90%, 620px);
+
+  text-align: center;
+
+  animation: anniversaryContentIn 1s cubic-bezier(.2,.75,.25,1) both;
+}
+
+/* ===== 顶部文字 ===== */
+
+.anniversary-eyebrow {
+  color: #c8a967;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.42em;
+}
+
+.anniversary-brand {
+  margin-top: 17px;
+
+  color: #f8e7bd;
+
+  font-size: clamp(38px, 7vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+
+  text-shadow:
+    0 0 30px rgba(238, 193, 105, 0.2);
+}
+
+.anniversary-title {
+  margin-top: 4px;
+
+  color: rgba(232, 204, 151, 0.7);
+
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.55em;
+}
+
+/* ===== 周年数字 ===== */
+
+.anniversary-number {
+  position: relative;
+
+  margin-top: 4px;
+
+  line-height: 1;
+}
+
+.anniversary-number span {
+  display: block;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(150px, 30vw, 270px);
+  font-weight: 400;
+  line-height: 0.95;
+
+  background: linear-gradient(
+    145deg,
+    #fff4cf 5%,
+    #e9c77d 28%,
+    #b8893d 52%,
+    #f9e6b0 72%,
+    #a77b37 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  filter: drop-shadow(0 8px 30px rgba(212, 164, 78, 0.20));
+}
+
+.anniversary-unit {
+  margin-top: 7px;
+
+  color: #e5c98e;
+
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.38em;
+}
+
+/* ===== 分隔线 ===== */
+
+.anniversary-divider {
+  width: 90px;
+  height: 1px;
+
+  margin: 27px 0 22px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(231, 193, 119, 0.8),
+    transparent
+  );
+}
+
+/* ===== 描述 ===== */
+
+.anniversary-description {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.anniversary-main-text {
+  color: #f8e8bd;
+
+  font-size: clamp(15px, 3vw, 19px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.anniversary-sub-text {
+  color: rgba(237, 220, 184, 0.58);
+
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.anniversary-date {
+  margin-top: 25px;
+
+  color: rgba(207, 176, 117, 0.72);
+
+  font-size: 10px;
+  letter-spacing: 0.25em;
+}
+
+/* ===== 进入按钮 ===== */
+
+.anniversary-enter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  min-width: 150px;
+
+  margin-top: 32px;
+  padding: 12px 22px;
+
+  border: 1px solid rgba(235, 202, 137, 0.48);
+  border-radius: 30px;
+
+  color: #f8e6ba;
+  background: rgba(218, 174, 85, 0.10);
+
+  font-size: 12px;
+  letter-spacing: 0.08em;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.anniversary-enter svg {
+  width: 15px;
+  height: 15px;
+
+  transition: transform 0.25s ease;
+}
+
+.anniversary-enter:hover {
+  background: rgba(218, 174, 85, 0.20);
+  border-color: rgba(235, 202, 137, 0.8);
+}
+
+.anniversary-enter:hover svg {
+  transform: translateX(3px);
+}
+
+/* ===== 动画 ===== */
+
+@keyframes anniversaryContentIn {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes anniversaryGlow {
+  from {
+    opacity: 0.55;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes anniversaryParticles {
+  from {
+    transform: translateY(0);
+    opacity: 0.65;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(-25px);
+    opacity: 0.65;
+  }
+}
+
+/* ===== 手机端 ===== */
+
+@media (max-width: 540px) {
+
+  .anniversary-content {
+    width: 88%;
+  }
+
+  .anniversary-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+  }
+
+  .anniversary-number span {
+    font-size: clamp(140px, 42vw, 210px);
+  }
+
+  .anniversary-divider {
+    margin: 22px 0 18px;
+  }
+
+  .anniversary-main-text {
+    font-size: 15px;
+  }
+
+  .anniversary-sub-text {
+    font-size: 11px;
+  }
+
+  .anniversary-date {
+    font-size: 9px;
+    letter-spacing: 0.16em;
+  }
+
+  .anniversary-close {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+/* ===== 减少动态效果 ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  .anniversary-modal *,
+  .anniversary-modal *::before,
+  .anniversary-modal *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
