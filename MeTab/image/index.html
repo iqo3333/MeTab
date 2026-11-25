@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f5f7">
+  <meta name="description" content="MeTab 壁纸展示，浏览并预览静态与动态壁纸。">
+  <title>MeTab 壁纸库</title>
+  <link rel="icon"
+        href="../icons/favicon.png"
+        type="image/png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+<a class="brand" href="./" aria-label="MeTab 壁纸库首页">
+  <img class="brand-icon" src="../icons/favicon.png" alt="">
+  <span>MeTab <i>/</i> 壁纸库</span>
+</a>
+    <span class="top-note">WALLPAPER COLLECTION</span>
+  </header>
+
+  <main class="page">
+    <section class="intro">
+      <p class="eyebrow">METAB WALLPAPERS</p>
+      <h1>让每一次打开，<br class="mobile-break">都有新的风景。</h1>
+      <p class="subtitle">浏览精选壁纸，点击卡片即可预览高清静态图片或动态画面。</p>
+      <div class="stats">
+        <div><strong id="totalCount">36</strong><span>全部壁纸</span></div>
+        <div><strong id="motionCount">20</strong><span>动态壁纸</span></div>
+        <div><strong id="stillCount">16</strong><span>静态壁纸</span></div>
+      </div>
+    </section>
+
+    <section class="toolbar" aria-label="壁纸筛选">
+      <div class="filters" role="group" aria-label="类型筛选">
+        <button class="filter active" data-filter="all">全部</button>
+        <button class="filter" data-filter="动态">动态</button>
+        <button class="filter" data-filter="静态">静态</button>
+        <button class="filter" data-filter="官方">官方</button>
+        <button class="filter" data-filter="动漫">动漫</button>
+        <button class="filter" data-filter="简约">简约</button>
+        <button class="filter" data-filter="游戏">游戏</button>
+        <button class="filter" data-filter="科幻">科幻</button>
+        <button class="filter" data-filter="风景">风景</button>
+        <button class="filter" data-filter="未分类">未分类</button>
+      </div>
+      <label class="search">
+        <span aria-hidden="true">⌕</span>
+        <input id="searchInput" type="search" placeholder="搜索壁纸名称…" autocomplete="off">
+        <kbd>⌘ K</kbd>
+      </label>
+    </section>
+
+    <div class="result-line"><span id="resultCount">共 36 款壁纸</span><span>点击任意壁纸预览</span></div>
+    <section class="wallpaper-grid" id="wallpaperGrid" aria-live="polite"></section>
+    <p class="empty" id="emptyState" hidden>没有找到匹配的壁纸。</p>
+
+    <footer class="footer">
+      <span>© 林澈 2026. All Rights Reserved</span>
+      <span>MeTab Wallpaper Collection</span>
+    </footer>
+  </main>
+
+  <div class="viewer" id="viewer" aria-hidden="true">
+    <div class="viewer-backdrop" data-close></div>
+    <section class="viewer-panel" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
+      <button class="close-button" id="closeViewer" aria-label="关闭预览">×</button>
+      <div class="viewer-media" id="viewerMedia"></div>
+      <div class="viewer-info">
+        <div><p class="viewer-label">WALLPAPER PREVIEW</p><h2 id="viewerTitle">壁纸名称</h2></div>
+        <span class="type-tag" id="viewerType">动态</span>
+      </div>
+      <div class="viewer-actions">
+        <button class="copy-address" id="copyAddress" type="button">复制文件地址</button>
+        <a id="openOriginal" href="#" target="_blank" rel="noopener">在新窗口打开原文件 ↗</a>
+        <span>复制后可粘贴到 MeTab「自定义壁纸」</span>
+      </div>
+    </section>
+  </div>
+
+  <script src="wallpapers.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
