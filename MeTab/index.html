@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width,
+                 initial-scale=1.0,
+                 maximum-scale=1.0,
+                 minimum-scale=1.0,
+                 user-scalable=no">
+
+  <title>MeTab – 简约美观，专注高效！</title>
+
+  <meta name="description"
+        content="告别杂乱标签页，快速访问网站或搜索内容，一切尽在掌握。MeTab 标签页提供清爽界面与高效操作体验，让浏览器新标签页更简洁、智能。">
+
+  <meta name="keywords"
+        content="MeTab,标签页,新标签页,浏览器主页,极简主页,搜索引擎,自定义主页">
+
+  <meta name="author"
+        content="MeTab">
+
+  <meta name="robots"
+        content="index,follow">
+
+  <meta name="theme-color"
+        content="#000000">
+
+  <link rel="canonical"
+        href="https://tab.iqo3333.cn/">
+
+  <link rel="alternate"
+        hreflang="zh-CN"
+        href="https://tab.iqo3333.cn/">
+
+  <link rel="alternate"
+        hreflang="zh-HK"
+        href="https://tab.iqo3333.cn/zh_hant/">
+
+  <link rel="icon"
+        href="icons/favicon.png"
+        type="image/png">
+
+  <link rel="stylesheet"
+        href="styles.css">
+
+  <link rel="stylesheet" 
+        href="toast.css">
+
+
+  <link rel="stylesheet" 
+        href="music/music-player.css">
+
+  <link rel="stylesheet" 
+        href="anniversary/anniversary.css">
+
+</head>
+
+<body>
+
+<!-- ===== MeTab Ver.9.0.0 周年庆典 ===== -->
+<div id="anniversaryModal" class="anniversary-modal" hidden>
+
+  <!-- 背景装饰 -->
+  <div class="anniversary-bg"></div>
+  <div class="anniversary-glow"></div>
+  <div class="anniversary-particles" aria-hidden="true"></div>
+
+  <!-- 关闭按钮 -->
+  <button class="anniversary-close"
+          id="anniversaryClose"
+          type="button"
+          aria-label="关闭周年庆典">
+    <svg viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.7"
+         stroke-linecap="round">
+      <path d="M18 6 6 18M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <!-- 庆典内容 -->
+  <div class="anniversary-content">
+
+    <div class="anniversary-eyebrow">
+      A SPECIAL MILESTONE
+    </div>
+
+    <div class="anniversary-brand">Me Tab</div>
+
+    <div class="anniversary-title">
+      ANNIVERSARY
+    </div>
+
+    <div class="anniversary-number" id="anniversaryNumber">
+      <span>1</span>
+    </div>
+
+    <div class="anniversary-unit" id="anniversaryUnit">
+      YEAR ANNIVERSARY
+    </div>
+
+    <div class="anniversary-divider"></div>
+
+    <div class="anniversary-description">
+      <div class="anniversary-main-text" id="anniversaryMainText">
+        MeTab Ver.9.0.0 发布一周年
+      </div>
+
+      <div class="anniversary-sub-text">
+        感谢一路陪伴，让每一次打开都更简单
+      </div>
+    </div>
+
+    <div class="anniversary-date">
+      12月01日 — 12月07日
+    </div>
+
+    <button class="anniversary-enter"
+            id="anniversaryEnter"
+            type="button">
+      开始体验
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke="currentColor"
+           stroke-width="1.8"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+        <path d="M5 12h14M13 6l6 6-6 6"/>
+      </svg>
+    </button>
+
+  </div>
+
+</div>
+
+
+  <!-- 背景 -->
+  <video id="bg-video"
+         autoplay
+         loop
+         muted
+         playsinline
+         webkit-playsinline
+         preload="auto">
+  </video>
+
+  <img id="bg-image"
+       alt="background">
+
+  <!-- 遮罩 -->
+  <div class="overlay"></div>
+
+  <!-- 页面内容 -->
+  <div class="content">
+
+    <!-- 时间和日期 -->
+    <div class="datetime">
+
+      <div id="clock"></div>
+
+      <div id="date"></div>
+
+    </div>
+
+
+    <!-- 搜索栏外层容器 -->
+    <div class="search-wrapper">
+
+      <!-- 搜索栏 -->
+      <div class="search-box">
+
+        <div class="engine-select"
+             id="engineSelect">
+
+          <img id="engineIcon"
+               src="icons/bing.png"
+               alt="engine">
+
+        </div>
+
+        <input id="domainInput"
+               type="text"
+               inputmode="search"
+               placeholder="搜索或输入 Web 地址..."
+               autocomplete="off"
+               autocorrect="off"
+               autocapitalize="none"
+               spellcheck="false">
+
+        <!-- 清除按钮 -->
+        <button id="clearBtn"
+                type="button">
+
+          ✕
+
+        </button>
+
+        <!-- 搜索按钮 -->
+<button id="goBtn"
+        type="button">
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2.8"
+               stroke-linecap="round"
+               stroke-linejoin="round">
+
+            <path d="M3 12h16"></path>
+
+            <path d="m12 5 7 7-7 7"></path>
+
+          </svg>
+
+        </button>
+
+      </div>
+
+
+      <!-- 搜索记录菜单 -->
+      <div id="searchHistory"
+           class="search-history">
+
+        <div class="history-list"
+             id="historyList">
+        </div>
+
+        <div class="history-footer">
+
+          <button id="clearHistory"
+                  type="button">
+
+            清空搜索记录
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- 搜索引擎菜单 -->
+      <div id="engineDropdown"
+           class="engine-dropdown">
+
+        <div data-engine="Bing"
+             data-icon="icons/bing.png">
+          Bing
+        </div>
+
+        <div data-engine="Google"
+             data-icon="icons/google.png">
+          Google
+        </div>
+
+        <div data-engine="Baidu"
+             data-icon="icons/baidu.png">
+          Baidu
+        </div>
+
+        <div data-engine="Yahoo"
+             data-icon="icons/yahoo.png">
+          Yahoo
+        </div>
+
+        <div data-engine="Yandex"
+             data-icon="icons/yandex.png">
+          Yandex
+        </div>
+
+        <div data-engine="Duckduckgo"
+             data-icon="icons/duckduckgo.png">
+          Duckduckgo
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- 快捷方式 -->
+    <div class="quick-links"
+         id="quickLinks">
+
+      <a href="https://www.bing.com"
+         class="quick-item"
+         target="_blank">
+
+        <img class="quick-icon"
+             src="icons/bing.png"
+             alt="Bing">
+
+      </a>
+
+      <a href="https://www.google.com"
+         class="quick-item"
+         target="_blank">
+
+        <img class="quick-icon"
+             src="icons/google.png"
+             alt="Google">
+
+      </a>
+
+      <a href="https://www.baidu.com"
+         class="quick-item"
+         target="_blank">
+
+        <img class="quick-icon"
+             src="icons/baidu.png"
+             alt="Baidu">
+
+      </a>
+
+      <a href="https://github.com/iqo3333/MeTab"
+         class="quick-item"
+         target="_blank">
+
+        <img class="quick-icon"
+             src="icons/github.png"
+             alt="GitHub">
+
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- 右上角按钮组 -->
+  <div class="top-actions">
+
+    <!-- 背景切换 -->
+    <div class="bg-wrapper">
+
+      <button class="bg-btn"
+              id="bgBtn"
+              type="button">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="20"
+             height="20"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.9"
+             stroke-linecap="round"
+             stroke-linejoin="round">
+
+          <path d="M9 4L12 6L15 4L18 6L20 10L17 12V20H7V12L4 10L6 6L9 4Z"/>
+
+        </svg>
+
+      </button>
+
+    </div>
+
+
+<!-- MeTab 介绍页入口 -->
+<div class="lang-wrapper">
+<button class="lang-btn"
+        id="profileBtn"
+        type="button"
+        aria-label="MeTab 介绍页">
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+         width="32"
+         height="32"
+         viewBox="0 0 32 32"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.8"
+         stroke-linecap="round"
+         stroke-linejoin="round"
+         style="display:block; flex-shrink:0;">
+
+      <!-- 页面主体 -->
+      <rect x="4" y="5" width="24" height="22" rx="4"/>
+
+      <!-- 页面顶部 -->
+      <path d="M4 11h24"/>
+
+      <!-- 页面装饰 -->
+      <circle cx="8" cy="8" r=".7" fill="currentColor" stroke="none"/>
+      <circle cx="11" cy="8" r=".7" fill="currentColor" stroke="none"/>
+
+      <!-- 内容区域 -->
+      <path d="M9 16h6"/>
+      <path d="M9 20h14"/>
+      <path d="M9 23h10"/>
+
+      <!-- 信息标识 -->
+      <circle cx="22" cy="16.5" r="2.5"/>
+
+    </svg>
+
+  </button>
+</div>
+
+  <!-- 版权 -->
+  <div class="footer-center">
+
+<!-- 页面版本 -->
+<div class="version-info" id="versionInfo">
+
+  <!-- 当前页面版本 -->
+  <a href="https://github.com/iqo3333/MeTab/releases/tag/Ver.9.3.4"
+     id="versionLink"
+     target="_blank"
+     rel="noopener noreferrer">
+    <b id="currentVersion">页面版本：Ver.9.3.4</b>
+  </a>
+
+  <!-- 新版本提示 -->
+  <a class="version-update"
+     id="versionUpdate"
+     href="https://github.com/iqo3333/MeTab/releases"
+     target="_blank"
+     rel="noopener noreferrer"
+     hidden>
+    发现新版本
+  </a>
+
+</div>
+
+    <span>
+      <b>© 林澈 2026. All Rights Reserved</b>
+    </span>
+
+  </div>
+
+
+<!-- ===== 公告弹窗 ===== -->
+<div id="noticeModal" class="notice-modal">
+
+  <div class="notice-box">
+
+    <!-- 标题 -->
+    <div class="notice-header">
+      <span>MeTab 弹窗公告</span>
+    </div>
+
+    <!-- Markdown 公告内容 -->
+    <div id="noticeContent"
+         class="notice-content"
+         aria-live="polite">
+
+      正在加载公告...
+
+    </div>
+
+    <!-- 底部按钮 -->
+    <div class="notice-actions">
+
+      <button id="noticeClose">
+        本次关闭
+      </button>
+
+      <button id="noticeHide">
+        不再提示
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- 背景菜单动态生成 -->
+  <script src="image/bg-list.js"></script>
+
+  <!-- 主逻辑 -->
+  <script src="toast.js"></script>
+
+  <script src="script.js"></script>
+ 
+  <script src="music/music-list.js"></script>
+
+  <script src="music/music-player.js"></script>
+
+  <script src="custom-settings.js"></script>
+
+  <script src="anniversary/anniversary.js"></script>
+
+</body>
+
+</html>
