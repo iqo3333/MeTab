@@ -1,0 +1,19 @@
+MeTab 音乐播放器接入说明
+========================
+
+1. 将 music-player.css、music-player.js、music-list.js 放到 index.html 同级目录。
+2. 在 index.html 的 </head> 前添加：
+   <link rel="stylesheet" href="music-player.css">
+3. 在页面底部现有 script.js 引用之后、</body> 之前添加：
+   <script src="music-list.js"></script>
+   <script src="music-player.js"></script>
+4. 在 music-list.js 中配置歌曲，例如：
+   { title: "歌曲名称", artist: "歌手", url: "music/song.mp3", cover: "images/cover.jpg" }
+   cover 是可选项；如果未填写，播放器会尝试通过 Apple/iTunes Search API 自动搜索封面。
+5. 自动搜索需要联网，不保证所有歌曲都能匹配；自制或未发行歌曲建议手动填写 cover。
+6. TXT 每行格式：歌曲名称 | 歌手名称 | 音频链接 | 封面图片链接 | LRC 歌词链接。封面和歌词链接均可省略。
+7. 歌词支持 LRC 时间轴同步：在 music-list.js 中给歌曲添加 lyricsUrl: "lyrics/song.lrc"，或直接添加 lyrics: "[00:01.00]第一句歌词\n[00:04.00]第二句歌词"。TXT 列表支持填写可公开访问的 .lrc 链接。
+8. 歌词文件需允许网页跨域读取；没有时间标签的普通 TXT 歌词不会同步滚动。
+9. 本地音频刷新后需要重新选择；浏览器不能直接读取访客电脑的任意绝对路径。
+
+自动播放默认开启，用户可关闭并记忆偏好；浏览器仍可能拦截首次带声音的自动播放。
