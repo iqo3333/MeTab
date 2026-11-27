@@ -8,27 +8,26 @@
 
 <p align="center">
 
-## 📄 許可證
+## 📄 许可证
 
-本專案採用 **林澈.LYC 自訂非商業性使用許可證**。
+本项目采用 **林澈.LYC 自定义非商业性使用许可证**。
 
-在遵守許可證條款的前提下，您可以自由使用、複製、分享、修改及分發本專案，但必須保留適當的作者署名，並明確標註修改內容。
+您可以在遵守许可证条款的前提下，自由使用、复制、分享、修改及分发本项目，但必须保留适当的作者署名，并明确标注修改内容。
 
-**未經版權所有者事先明確書面許可，禁止將本專案用於商業用途。**
+**未经版权所有者事先明确的书面许可，禁止将本项目用于商业目的。**
 
-詳細授權範圍、使用限制及免責聲明，請參閱專案根目錄中的 `LICENSE` 檔案。
-
-版權所有 © 2026 林澈.LYC。保留所有未明確授予的權利。
+详细授权范围、使用限制及免责声明，请参阅项目根目录中的 `LICENSE` 文件。
 
 ---
 
 <p align="center">
-
-**MeTab**
-
-*簡約美觀，專注高效。*
-
-© 林澈 2026. All Rights Reserved.
-
+  <strong>MeTab</strong>
+  <br>
+  <sub>简约美观，专注高效。</sub>
+  <br><br>
+  © 2026 林澈.LYC. All Rights Reserved.
 </p>
-<img width="1599" height="899" alt="image" src="https://github.com/user-attachments/assets/a0d7118b-267f-488a-a0d6-e0e24a7827c6" />
+
+<p align="center">
+  <img width="100%" alt="MeTab 页面展示" src="https://github.com/user-attachments/assets/82617faa-8884-4890-9c35-a7865d4987c5">
+</p>
