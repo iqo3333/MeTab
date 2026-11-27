@@ -1,9 +1,3 @@
-<p align="center" class="language" title="Language selection 语言选择">
-  <b>🇨🇳简体中文✅️</b> | 
-  <a href="README_zh_hant.md">🇭🇰繁體中文(终止维护)</a> 
-</p>
-<hr>
-
 # MeTab - 简约美观，专注高效！
 
 **让每一次打开新标签页，都成为一次轻盈的开始。**
@@ -16,9 +10,7 @@ MeTab 不只是一个新标签页，更是一个可以按照自己喜好打造�
 
 **简约而不简单，实用而有温度。**
 
-[**在线体验 MeTab →**](https://tab.iqo3333.cn/)
-
-[**项目介绍**](https://tab.iqo3333.cn/profile)
+[**在线体验**](https://tab.iqo3333.cn/)　·　[**项目介绍**](https://tab.iqo3333.cn/profile)
 
 ## ✦ 浏览器兼容性
 
