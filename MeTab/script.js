@@ -376,41 +376,396 @@ document.addEventListener('touchend', e => {
 document.addEventListener('gesturestart', e => {
     e.preventDefault();
 });
+
+
+
 /* ===== 背景切换 ===== */
 
+// 当前是否启用了动态壁纸
+let backgroundVideoEnabled = false;
+
+// 动态壁纸恢复定时器
+let backgroundVideoRestoreTimers = [];
+
+// 背景加载状态
+let backgroundLoadToken = 0;
+let backgroundLoadTimeout = null;
+let backgroundRetryTimer = null;
+
+
+/* ===== 清理背景加载定时器 ===== */
+
+function clearBackgroundLoadTimers() {
+
+  if (backgroundLoadTimeout) {
+    clearTimeout(backgroundLoadTimeout);
+    backgroundLoadTimeout = null;
+  }
+
+  if (backgroundRetryTimer) {
+    clearTimeout(backgroundRetryTimer);
+    backgroundRetryTimer = null;
+  }
+
+}
+
+
+/* ===== 背景加载成功 ===== */
+
+function backgroundLoadSuccess(token) {
+
+  if (token !== backgroundLoadToken) return;
+
+  clearBackgroundLoadTimers();
+
+}
+
+
+/* ===== 背景加载失败处理 ===== */
+
+function handleBackgroundLoadFailure(url, token, attempt) {
+
+  if (token !== backgroundLoadToken) return;
+
+  clearBackgroundLoadTimers();
+
+  // 首次失败：不弹窗，自动重试一次
+  if (attempt === 1) {
+
+    console.warn(
+      "[MeTab] 背景首次加载失败，准备重新加载：",
+      url
+    );
+
+    backgroundRetryTimer = setTimeout(function () {
+
+      if (token !== backgroundLoadToken) return;
+
+      loadBackgroundResource(url, token, 2);
+
+    }, 800);
+
+    return;
+  }
+
+  // 第二次失败：提示用户
+  console.error(
+    "[MeTab] 背景二次加载仍然失败：",
+    url
+  );
+
+  if (window.MeTabToast) {
+    MeTabToast.show(
+      "背景加载失败，请检查壁纸链接或网络连接。",
+      "error"
+    );
+  }
+
+}
+
+
+/* ===== 动态壁纸自动恢复 ===== */
+
+function resumeBackgroundVideo() {
+
+  const video = document.getElementById("bg-video");
+
+  // 页面不可见时不主动播放
+  if (document.hidden) return;
+
+  // 当前不是视频壁纸时不处理
+  if (!backgroundVideoEnabled) return;
+
+  if (!video || video.style.display === "none" || !video.src) {
+    return;
+  }
+
+  // 视频已经正常播放，无需处理
+  if (!video.paused && !video.ended) return;
+
+  const playPromise = video.play();
+
+  if (playPromise && typeof playPromise.catch === "function") {
+
+    playPromise.catch(function (error) {
+
+      // 自动播放权限限制不反复提示
+      if (error && error.name === "NotAllowedError") return;
+
+      // 页面切换期间可能产生中断
+      if (error && error.name === "AbortError") return;
+
+      console.warn("[MeTab] 动态壁纸恢复失败：", error);
+
+    });
+
+  }
+
+}
+
+
+/* ===== 延迟检查视频状态 ===== */
+
+function scheduleBackgroundVideoRestore() {
+
+  backgroundVideoRestoreTimers.forEach(function (timer) {
+    clearTimeout(timer);
+  });
+
+  backgroundVideoRestoreTimers = [];
+
+  // 分别检查，兼顾浏览器延迟恢复的情况
+  [200, 800, 1500].forEach(function (delay) {
+
+    const timer = setTimeout(function () {
+      resumeBackgroundVideo();
+    }, delay);
+
+    backgroundVideoRestoreTimers.push(timer);
+
+  });
+
+}
+
+
+/* ===== 页面重新可见时恢复 ===== */
+
+document.addEventListener("visibilitychange", function () {
+
+  if (!document.hidden) {
+    scheduleBackgroundVideoRestore();
+  }
+
+});
+
+
+/* ===== 页面从缓存恢复时检查 ===== */
+
+window.addEventListener("pageshow", function () {
+  scheduleBackgroundVideoRestore();
+});
+
+
+/* ===== 窗口重新获得焦点时检查 ===== */
+
+window.addEventListener("focus", function () {
+  scheduleBackgroundVideoRestore();
+});
+
+
+/* ===== 网络恢复时检查 ===== */
+
+window.addEventListener("online", function () {
+  scheduleBackgroundVideoRestore();
+});
+
+
+/* ===== 背景资源加载 ===== */
+
+function loadBackgroundResource(url, token, attempt) {
+
+  if (token !== backgroundLoadToken) return;
+
+  const image = document.getElementById("bg-image");
+  const video = document.getElementById("bg-video");
+
+  if (!image || !video) return;
+
+  clearBackgroundLoadTimers();
+
+  const isVideo =
+    /\.(mp4|webm|ogg|mov|m4v)(?:$|[?#])/i.test(url);
+
+
+  /* ===== 图片背景 ===== */
+
+  if (!isVideo) {
+
+    image.onload = function () {
+
+      if (token !== backgroundLoadToken) return;
+
+      backgroundLoadSuccess(token);
+
+      console.log(
+        "[MeTab] 图片背景加载成功，第 " + attempt + " 次尝试"
+      );
+
+    };
+
+    image.onerror = function () {
+
+      if (token !== backgroundLoadToken) return;
+
+      handleBackgroundLoadFailure(url, token, attempt);
+
+    };
+
+    // 设置加载超时
+    backgroundLoadTimeout = setTimeout(function () {
+
+      handleBackgroundLoadFailure(url, token, attempt);
+
+    }, 20000);
+
+
+    // 第二次加载时重新发起请求
+    if (attempt === 2) {
+
+      image.removeAttribute("src");
+      image.src = url;
+
+    }
+
+    // 检查第一次请求是否已经完成
+    else if (image.getAttribute("src") === url) {
+
+      if (image.complete) {
+
+        if (image.naturalWidth > 0) {
+
+          backgroundLoadSuccess(token);
+
+        } else {
+
+          handleBackgroundLoadFailure(url, token, attempt);
+
+        }
+
+      }
+
+    }
+
+    // 尚未设置过该地址
+    else {
+
+      image.src = url;
+
+    }
+
+    return;
+
+  }
+
+
+  /* ===== 视频背景 ===== */
+
+  video.onerror = function () {
+
+    if (token !== backgroundLoadToken) return;
+
+    handleBackgroundLoadFailure(url, token, attempt);
+
+  };
+
+  video.oncanplay = function () {
+
+    if (token !== backgroundLoadToken) return;
+
+    backgroundLoadSuccess(token);
+
+    console.log(
+      "[MeTab] 视频背景加载成功，第 " + attempt + " 次尝试"
+    );
+
+  };
+
+  // 设置加载超时
+  backgroundLoadTimeout = setTimeout(function () {
+
+    handleBackgroundLoadFailure(url, token, attempt);
+
+  }, 20000);
+
+
+  // 第二次加载时重新请求视频
+  if (attempt === 2) {
+
+    video.pause();
+    video.removeAttribute("src");
+    video.load();
+
+  }
+
+  video.src = url;
+  video.load();
+
+  const playPromise = video.play();
+
+  if (playPromise && typeof playPromise.catch === "function") {
+
+    playPromise.catch(function (error) {
+
+      if (token !== backgroundLoadToken) return;
+
+      // 自动播放权限限制不属于资源加载失败
+      if (error && error.name === "NotAllowedError") return;
+
+      // 播放中断不属于资源加载失败
+      if (error && error.name === "AbortError") return;
+
+      console.warn("[MeTab] 背景视频播放失败：", error);
+
+      handleBackgroundLoadFailure(url, token, attempt);
+
+    });
+
+  }
+
+}
+
+
+/* ===== 设置背景 ===== */
+
 function setBackground(url) {
+
   const image = document.getElementById("bg-image");
   const video = document.getElementById("bg-video");
 
   if (!url || !image || !video) return;
 
+  // 取消之前的加载和重试任务
+  clearBackgroundLoadTimers();
+
+  // 使之前的加载任务失效
+  const token = ++backgroundLoadToken;
+
+  // 清理旧的视频恢复任务
+  backgroundVideoRestoreTimers.forEach(function (timer) {
+    clearTimeout(timer);
+  });
+
+  backgroundVideoRestoreTimers = [];
+
+  const isVideo =
+    /\.(mp4|webm|ogg|mov|m4v)(?:$|[?#])/i.test(url);
+
+
   /* ===== 视频背景 ===== */
-  if (/\.(mp4|webm|ogg|mov|m4v)(?:$|[?#])/i.test(url)) {
+
+  if (isVideo) {
+
+    backgroundVideoEnabled = true;
+
     image.style.display = "none";
 
     video.pause();
     video.style.display = "block";
-    video.src = url;
-    video.load();
 
-    const playPromise = video.play();
+    loadBackgroundResource(url, token, 1);
 
-    if (playPromise && typeof playPromise.catch === "function") {
-      playPromise.catch(function (error) {
-        console.warn("背景视频播放失败：", error);
+    // 新视频加载后检查播放状态
+    scheduleBackgroundVideoRestore();
 
-        if (error && error.name !== "NotAllowedError") {
-          MeTabToast.show(
-            "背景视频播放失败，请检查壁纸链接。",
-            "error"
-          );
-        }
-      });
-    }
   }
 
+
   /* ===== 图片背景 ===== */
+
   else {
+
+    backgroundVideoEnabled = false;
+
     video.pause();
     video.removeAttribute("src");
     video.load();
@@ -423,28 +778,18 @@ function setBackground(url) {
       image.fetchPriority = "high";
     }
 
-    // 重新显示图片元素
     image.style.display = "block";
 
-    // 绑定图片加载失败事件
-    image.onerror = function () {
-      console.error("背景图片加载失败：", url);
+    // 如果 HTML 已经提前加载了相同图片，
+    // 直接接管当前请求，不重复发起请求
+    loadBackgroundResource(url, token, 1);
 
-      MeTabToast.show(
-        "背景图片加载失败，请检查图片链接或网络连接。",
-        "error"
-      );
-
-      image.onerror = null;
-    };
-
-    image.src = url;
   }
+
 }
-/* ===== 等待页面 + 动态菜单全部完成 ===== */
 
 
-/* ===== 壁纸菜单初始化（Edge 扩展兼容） ===== */
+/* ===== 壁纸菜单初始化 ===== */
 
 window.addEventListener("load", function () {
 
@@ -452,7 +797,8 @@ window.addEventListener("load", function () {
   const bgDropdown = document.getElementById("bgDropdown");
 
   if (!bgBtn || !bgDropdown) {
-    console.error("bgBtn 或 bgDropdown 不存在");
+
+    console.error("[MeTab] 壁纸菜单初始化失败");
 
     if (window.MeTabToast) {
       MeTabToast.show(
@@ -462,37 +808,55 @@ window.addEventListener("load", function () {
     }
 
     return;
+
   }
+
 
   /* ===== 恢复背景 ===== */
 
-  const savedBg = localStorage.getItem("preferredBackground");
+  const defaultBg = "image/MeTab-晴天.png";
 
-  const defaultBg =
-    "image/MeTab-晴天.png";
-
+  let savedBg = null;
   let hasCustomBackground = false;
 
   try {
+
+    savedBg = localStorage.getItem("preferredBackground");
+
     const config = JSON.parse(
       localStorage.getItem("metab_custom_background") || "null"
     );
 
     hasCustomBackground = !!config;
+
   } catch (error) {
-    hasCustomBackground = false;
+
+    console.warn("[MeTab] 背景设置读取失败：", error);
+
   }
 
+
+  // 自定义壁纸由 custom-settings.js 接管
   if (!hasCustomBackground) {
-    setBackground(savedBg || defaultBg);
+
+    const backgroundUrl =
+      savedBg || defaultBg;
+
+    setBackground(backgroundUrl);
+
   }
+
 
   /* ===== 展开 / 收起菜单 ===== */
 
   bgBtn.addEventListener("click", function (e) {
+
     e.stopPropagation();
+
     bgDropdown.classList.toggle("show");
+
   });
+
 
   /* ===== 点击空白关闭菜单 ===== */
 
@@ -502,10 +866,13 @@ window.addEventListener("load", function () {
       !bgBtn.contains(e.target) &&
       !bgDropdown.contains(e.target)
     ) {
+
       bgDropdown.classList.remove("show");
+
     }
 
   });
+
 
   /* ===== 内置壁纸切换 ===== */
 
@@ -520,9 +887,12 @@ window.addEventListener("load", function () {
       setBackground(bg);
 
       try {
+
         localStorage.setItem("preferredBackground", bg);
+
       } catch (error) {
-        console.error("背景设置保存失败：", error);
+
+        console.error("[MeTab] 背景设置保存失败：", error);
 
         if (window.MeTabToast) {
           MeTabToast.show(
@@ -530,6 +900,7 @@ window.addEventListener("load", function () {
             "warning"
           );
         }
+
       }
 
       bgDropdown.classList.remove("show");
@@ -1203,7 +1574,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 (function () {
 
-  var CURRENT_VERSION = 'Ver.9.3.4';
+  var CURRENT_VERSION = 'Ver.9.3.5';
 
   var API_URL =
     'https://api.github.com/repos/iqo3333/MeTab/releases/latest';
