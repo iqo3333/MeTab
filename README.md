@@ -60,5 +60,5 @@ MeTab 基于现代 Web 技术开发，并持续优化不同浏览器及设备上
 </p>
 
 <p align="center">
-  <img width="100%" alt="MeTab 页面展示" src="https://github.com/user-attachments/assets/a0d7118b-267f-488a-a0d6-e0e24a7827c6">
+  <img width="100%" alt="MeTab 页面展示" src="https://github.com/user-attachments/assets/82617faa-8884-4890-9c35-a7865d4987c5">
 </p>
