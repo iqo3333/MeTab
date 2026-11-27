@@ -1,7 +1,7 @@
 # MeTab – 簡約美觀，專注高效！
 
 <p align="center" class="language" title="Language selection 語言選擇">
-  <b>🇭🇰繁體中文(終止維護)✅️</b> | 
+  <b>🇭🇰繁體中文✅️</b> | 
   <a href="README_zh_cn.md">🇨🇳简体中文</a> 
 </p>
 <hr>
