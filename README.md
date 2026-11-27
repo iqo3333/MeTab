@@ -30,7 +30,7 @@ MeTab 基于现代 Web 技术开发，并持续优化不同浏览器及设备上
 |:--|:--:|
 | Google Chrome | 100+ |
 | Microsoft Edge | 100+ |
-| Mozilla Firefox | 100+ |
+| Mozilla Firefox | 103+ |
 | Safari | 15+ |
 | iOS Safari | 15+ |
 | Android Chrome | 100+ |
